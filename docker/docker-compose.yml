@@ -1,0 +1,63 @@
+version: "3.8"
+services: #servicios que voy a necesitar
+  jenkins:
+    container_name: jenkins_managed_by_compose #nombre del container
+    image: jenkins/jenkins:lts #version de la imagen
+    ports: #tipado de puertos puertoLocal:puerto al que apunta en container
+      - "8081:8080"
+      - "50001:50000"
+    volumes: #Nombre del volumen
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    networks: #Red en la que va a estar Jenkins, debe ser la misma que la de Sonarqube
+      - net_devops
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: "3G"
+
+  sonarqube:
+    container_name: sonarqube_managed_by_compose
+    image: sonarqube
+    #image: sonarqube:7.9.5-community
+    #image: mc1arke/sonarqube-with-community-branch-plugin:8.5-community
+    #image: mc1arke/sonarqube-with-community-branch-plugin:lts
+    ports: #puerto donde va a apuntar
+      - "9001:9000"
+    environment:
+      SONARQUBE_USERNAME: admin
+      SONARQUBE_PASSWORD: admin12345
+
+    volumes: #volumenes de sonarqube segun Docker Hub
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
+      #directorio local en donde está el .jar y el directorio del container en donde se va a instalar
+      - ./sonarqube/sonarqube-community-branch-plugin-1.12.0.jar:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.12.0.jar
+      - ./sonarqube/sonarqube-community-branch-plugin-1.12.0.jar:/opt/sonarqube/lib/common/sonarqube-community-branch-plugin-1.12.0.jar
+    restart: unless-stopped
+    networks: #Red en la que va a estar Jenkins, debe ser la misma que la de Sonarqube
+      - net_devops
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: "3G"
+
+volumes:
+  jenkins_home:
+    name: "compose_jenkins_home"
+  sonarqube_conf:
+    name: "compose_sonarqube_conf"
+  sonarqube_data:
+    name: "compose_sonarqube_data"
+  sonarqube_logs:
+    name: "compose_sonarqube_logs"
+  sonarqube_extensions:
+    name: "compose_sonarqube_extensions"
+networks:
+  net_devops:
