@@ -16,9 +16,9 @@ pipeline {
 
   environment {
       // General Variables for Pipeline
-      PROJECT_ROOT = 'express-mysql/app'
-      EMAIL_ADDRESS = 'san99tiagodevsecops@gmail.com'
-      REGISTRY = 'san99tiago/docker-pirate-express'
+      PROJECT_ROOT = 'app'
+      EMAIL_ADDRESS = 'brayan.venegas@grupobabel.com'
+      REGISTRY = 'brayanvenegas/nodeAppDocker'
   }
 
   stages {
@@ -32,7 +32,7 @@ pipeline {
       stage('Checkout') {
         steps {
         // Get Github repo using Github credentials (previously added to Jenkins credentials)
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/san99tiago/docker-pirate']]])        }
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://brayanvenegas@dev.azure.com/brayanvenegas/AppDemo/_git/nodeAppDB']]])        }
       }
       stage('Install dependencies') {
         steps {
@@ -65,10 +65,10 @@ pipeline {
                           -Dsonar.projectKey=SimpleExpressExample:Test \
                           -Dsonar.projectName=SimpleExpressExample \
                           -Dsonar.projectVersion=0.0.${BUILD_NUMBER} \
-                          -Dsonar.host.url=http://mysonarqube:9000 \
+                          -Dsonar.host.url=http://sonarqube:9001 \
                           -Dsonar.sources=./${PROJECT_ROOT}/app.js,./${PROJECT_ROOT}/config/db.config.js,./${PROJECT_ROOT}/routes/developers.js \
                           -Dsonar.login=admin \
-                          -Dsonar.password=admin \
+                          -Dsonar.password=admin12345 \
                           -Dsonar.tests=./${PROJECT_ROOT}/test \
                           -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
             }
