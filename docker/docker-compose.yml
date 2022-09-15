@@ -20,7 +20,7 @@ services: #servicios que voy a necesitar
 
   mysonarqube:
     container_name: sonarqube_managed_by_compose
-    image: sonarqube:7.9.5-community
+    image: sonarqube:lts
     #image: sonarqube:7.9.5-community
     #image: mc1arke/sonarqube-with-community-branch-plugin:8.5-community
     #image: mc1arke/sonarqube-with-community-branch-plugin:lts
@@ -28,7 +28,7 @@ services: #servicios que voy a necesitar
       - "9001:9000"
     environment:
       SONARQUBE_USERNAME: admin
-      SONARQUBE_PASSWORD: admin12345
+      SONARQUBE_PASSWORD: admin
 
     volumes: #volumenes de sonarqube segun Docker Hub
       - sonarqube_conf:/opt/sonarqube/conf
