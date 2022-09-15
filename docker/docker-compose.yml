@@ -20,7 +20,7 @@ services: #servicios que voy a necesitar
 
   sonarqube:
     container_name: sonarqube_managed_by_compose
-    image: sonarqube
+    image: sonarqube:7.9.5-community
     #image: sonarqube:7.9.5-community
     #image: mc1arke/sonarqube-with-community-branch-plugin:8.5-community
     #image: mc1arke/sonarqube-with-community-branch-plugin:lts
@@ -37,8 +37,8 @@ services: #servicios que voy a necesitar
       - sonarqube_extensions:/opt/sonarqube/extensions
 
       #directorio local en donde está el .jar y el directorio del container en donde se va a instalar
-      - ./sonarqube/sonarqube-community-branch-plugin-1.12.0.jar:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.12.0.jar
-      - ./sonarqube/sonarqube-community-branch-plugin-1.12.0.jar:/opt/sonarqube/lib/common/sonarqube-community-branch-plugin-1.12.0.jar
+      # - ./sonarqube/sonarqube-community-branch-plugin-1.12.0.jar:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.12.0.jar
+      # - ./sonarqube/sonarqube-community-branch-plugin-1.12.0.jar:/opt/sonarqube/lib/common/sonarqube-community-branch-plugin-1.12.0.jar
     restart: unless-stopped
     networks: #Red en la que va a estar Jenkins, debe ser la misma que la de Sonarqube
       - net_devops
