@@ -18,7 +18,7 @@ services: #servicios que voy a necesitar
           cpus: "2"
           memory: "3G"
 
-  sonarqube:
+  mysonarqube:
     container_name: sonarqube_managed_by_compose
     image: sonarqube:7.9.5-community
     #image: sonarqube:7.9.5-community
