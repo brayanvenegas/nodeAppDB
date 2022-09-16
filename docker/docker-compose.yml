@@ -28,7 +28,7 @@ services: #servicios que voy a necesitar
       - "9001:9000"
     environment:
       SONARQUBE_USERNAME: admin
-      SONARQUBE_PASSWORD: admin
+      SONARQUBE_PASSWORD: 12345
 
     volumes: #volumenes de sonarqube segun Docker Hub
       - sonarqube_conf:/opt/sonarqube/conf
