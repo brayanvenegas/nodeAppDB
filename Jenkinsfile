@@ -32,7 +32,7 @@ pipeline {
       stage('Checkout') {
         steps {
         // Get Github repo using Github credentials (previously added to Jenkins credentials)
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [ ], userRemoteConfigs: [[url: 'https://github.com/brayanvenegas/nodeAppDB.git']]])        }
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [ ], userRemoteConfigs: [[url: 'https://github.com/brayanvenegas/nodeAppDB']]])        }
       }
       stage('Install dependencies') {
         steps {
